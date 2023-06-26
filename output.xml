@@ -1,98 +1,390 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 5.0.1 (Python 3.9.13 on darwin)" generated="20230619 23:57:33.299" rpa="false" schemaversion="3">
-<suite id="s1" name="Console" source="/Users/newsha/qa/dk-cld-rbt/console.robot">
-<test id="s1-t1" name="Cloud Test Case" line="15">
+<robot generator="Robot 6.0.2 (Python 3.10.6 on linux)" generated="20230626 17:46:07.447" rpa="false" schemaversion="3">
+<suite id="s1" name="CLI" source="/home/newsha/new.robot/CLI.robot">
+<test id="s1-t1" name="Digi Cli Test Case" line="26">
 <kw name="Set Log Level" library="BuiltIn" type="SETUP">
 <arg>TRACE</arg>
 <doc>Sets the log threshold to the specified level and returns the old level.</doc>
-<msg timestamp="20230619 23:57:33.465" level="INFO">Log level changed from INFO to TRACE.</msg>
-<msg timestamp="20230619 23:57:33.465" level="TRACE">Return: 'INFO'</msg>
-<status status="PASS" starttime="20230619 23:57:33.465" endtime="20230619 23:57:33.465"/>
+<msg timestamp="20230626 17:46:07.729" level="INFO">Log level changed from INFO to TRACE.</msg>
+<msg timestamp="20230626 17:46:07.729" level="TRACE">Return: 'INFO'</msg>
+<status status="PASS" starttime="20230626 17:46:07.728" endtime="20230626 17:46:07.729"/>
 </kw>
 <kw name="Digicloud login">
-<msg timestamp="20230619 23:57:33.466" level="TRACE">Arguments: [  ]</msg>
-<kw name="Open Browser">
-<arg>${DIGI_CLOUD_URL}</arg>
-<arg>Chrome</arg>
-<msg timestamp="20230619 23:57:33.468" level="FAIL">No keyword with name 'Open Browser' found.</msg>
-<status status="FAIL" starttime="20230619 23:57:33.468" endtime="20230619 23:57:33.468"/>
+<msg timestamp="20230626 17:46:07.729" level="TRACE">Arguments: [  ]</msg>
+<kw name="Set Environment Variable" library="OperatingSystem">
+<arg>API_BASE_URL</arg>
+<arg>https://api.digicloud.dev</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<msg timestamp="20230626 17:46:07.729" level="TRACE">Arguments: [ 'API_BASE_URL' | 'https://api.digicloud.dev' ]</msg>
+<msg timestamp="20230626 17:46:07.730" level="INFO">Environment variable 'API_BASE_URL' set to value 'https://api.digicloud.dev'.</msg>
+<msg timestamp="20230626 17:46:07.730" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:07.729" endtime="20230626 17:46:07.730"/>
 </kw>
-<kw name="Wait Until Page Contains Element">
-<arg>${LOGIN_PG}</arg>
-<status status="NOT RUN" starttime="20230619 23:57:33.471" endtime="20230619 23:57:33.471"/>
+<kw name="Run Process" library="Process">
+<arg>${LOGOUT}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20230626 17:46:07.730" level="TRACE">Arguments: [ 'digicloud account logout' | shell='True' ]</msg>
+<msg timestamp="20230626 17:46:07.730" level="INFO">Starting process:
+digicloud account logout</msg>
+<msg timestamp="20230626 17:46:07.730" level="DEBUG">Process configuration:
+cwd:     /home/newsha/new.robot
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+stdin:   PIPE
+alias:   None
+env:     None</msg>
+<msg timestamp="20230626 17:46:07.736" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20230626 17:46:09.396" level="INFO">Process completed.</msg>
+<msg timestamp="20230626 17:46:09.397" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7fb81c06bb80&gt;</msg>
+<status status="PASS" starttime="20230626 17:46:07.730" endtime="20230626 17:46:09.397"/>
 </kw>
-<kw name="Input Text">
-<arg>${MAIL_INPUT_BOX}</arg>
-<arg>${MAIL_VALUE}</arg>
-<status status="NOT RUN" starttime="20230619 23:57:33.473" endtime="20230619 23:57:33.473"/>
+<kw name="Run Process" library="Process">
+<var>${output}</var>
+<arg>${LOGIN}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20230626 17:46:09.398" level="TRACE">Arguments: [ 'digicloud account login --email newsha.amiri@digikala.com --password Newsh@@4560 --debug' | shell='True' ]</msg>
+<msg timestamp="20230626 17:46:09.398" level="INFO">Starting process:
+digicloud account login --email newsha.amiri@digikala.com --password Newsh@@4560 --debug</msg>
+<msg timestamp="20230626 17:46:09.398" level="DEBUG">Process configuration:
+cwd:     /home/newsha/new.robot
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+stdin:   PIPE
+alias:   None
+env:     None</msg>
+<msg timestamp="20230626 17:46:09.404" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20230626 17:46:11.455" level="INFO">Process completed.</msg>
+<msg timestamp="20230626 17:46:11.456" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7fb81c06bca0&gt;</msg>
+<msg timestamp="20230626 17:46:11.456" level="INFO">${output} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20230626 17:46:09.397" endtime="20230626 17:46:11.456"/>
 </kw>
-<kw name="Input Text">
-<arg>${PASS_INPUT_BOX}</arg>
-<arg>${PASS_VALUE}</arg>
-<status status="NOT RUN" starttime="20230619 23:57:33.475" endtime="20230619 23:57:33.476"/>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${output.stdout}</arg>
+<arg>ir-vanak-plaza</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20230626 17:46:11.458" level="TRACE">Arguments: [ '┌────────────────┬──────────────────────────────────┐\n│ Email          │ newsha.amiri@digikala.com        │\n│ Namespace name │ newsha                           │\n│ Namespace ID   │ 3184b7d0439645488d94220d9a245109 │\n│ Region         │ ir-vanak-plaza                   │\n└────────────────┴──────────────────────────────────┘' | 'ir-vanak-plaza' ]</msg>
+<msg timestamp="20230626 17:46:11.458" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:11.457" endtime="20230626 17:46:11.458"/>
 </kw>
-<kw name="Click Element">
-<arg>${LOGIN_BUTTON}</arg>
-<status status="NOT RUN" starttime="20230619 23:57:33.478" endtime="20230619 23:57:33.478"/>
+<msg timestamp="20230626 17:46:11.459" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:07.729" endtime="20230626 17:46:11.459"/>
+</kw>
+<kw name="Instance create">
+<msg timestamp="20230626 17:46:11.459" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Process" library="Process">
+<var>${output}</var>
+<arg>${CREATE_INSTANCE}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20230626 17:46:11.460" level="TRACE">Arguments: [ 'digicloud instance create smprao --simple --instance-type g1.medium --image Ubuntu_20.04_LTS' | shell='True' ]</msg>
+<msg timestamp="20230626 17:46:11.460" level="INFO">Starting process:
+digicloud instance create smprao --simple --instance-type g1.medium --image Ubuntu_20.04_LTS</msg>
+<msg timestamp="20230626 17:46:11.460" level="DEBUG">Process configuration:
+cwd:     /home/newsha/new.robot
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+stdin:   PIPE
+alias:   None
+env:     None</msg>
+<msg timestamp="20230626 17:46:11.467" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20230626 17:46:21.311" level="INFO">Process completed.</msg>
+<msg timestamp="20230626 17:46:21.312" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7fb81c06b1f0&gt;</msg>
+<msg timestamp="20230626 17:46:21.312" level="INFO">${output} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20230626 17:46:11.460" endtime="20230626 17:46:21.312"/>
 </kw>
 <kw name="Sleep" library="BuiltIn">
 <arg>5seconds</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="NOT RUN" starttime="20230619 23:57:33.478" endtime="20230619 23:57:33.478"/>
+<msg timestamp="20230626 17:46:21.313" level="TRACE">Arguments: [ '5seconds' ]</msg>
+<msg timestamp="20230626 17:46:26.314" level="INFO">Slept 5 seconds</msg>
+<msg timestamp="20230626 17:46:26.314" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:21.312" endtime="20230626 17:46:26.314"/>
 </kw>
-<kw name="Wait Until Page Contains">
-<arg>Price update notice</arg>
-<arg>5seconds</arg>
-<status status="NOT RUN" starttime="20230619 23:57:33.480" endtime="20230619 23:57:33.480"/>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${output.stdout}</arg>
+<arg>${INS_NAME}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20230626 17:46:26.316" level="TRACE">Arguments: [ "┌──────────────────┬──────────────────────────────────┐\n│ id               │ 0c599fc49e0843baab96d1469f933ec4 │\n│ name             │ smprao                           │\n│ key_name         │ None                             │\n│ firewalls        │ ['default']                      │\n│ addresses        │ []                               │\n│ access_ip        │ None                             │\n│ cores            │ 4                                │\n│ memory           │ 4.0                              │\n│ root_volume_size │ 20                               │\n│ root_volume_type │ SSD                              │\n│ instance_type    │ g1.medium                        │\n│ status           │ None                             │\n│ type             │ simple                           │\n│ os_name          │ Ubuntu_20.04_LTS                 │\n│ os_username      │ ubuntu                           │\n│ namespace_id     │ 3184b7d0439645488d94220d9a245109 │\n│ description      │ None                             │\n│ updated_at       │ N/A                              │\n│ created_at       │ N/A                              │\n└──────────────────┴──────────────────────────────────┘" | 'smprao' ]</msg>
+<msg timestamp="20230626 17:46:26.316" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:26.314" endtime="20230626 17:46:26.316"/>
 </kw>
-<kw name="Click Element">
-<arg>${GOT_IT_BTN}</arg>
-<status status="NOT RUN" starttime="20230619 23:57:33.482" endtime="20230619 23:57:33.482"/>
-</kw>
-<kw name="Wait Until Page Contains Element">
-<arg>${HOME_PAGE}</arg>
-<status status="NOT RUN" starttime="20230619 23:57:33.483" endtime="20230619 23:57:33.483"/>
-</kw>
-<status status="FAIL" starttime="20230619 23:57:33.466" endtime="20230619 23:57:33.484"/>
-</kw>
-<kw name="Instance create">
-<status status="NOT RUN" starttime="20230619 23:57:33.484" endtime="20230619 23:57:33.484"/>
+<msg timestamp="20230626 17:46:26.316" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:11.459" endtime="20230626 17:46:26.317"/>
 </kw>
 <kw name="Check Instance Details">
-<status status="NOT RUN" starttime="20230619 23:57:33.485" endtime="20230619 23:57:33.485"/>
+<msg timestamp="20230626 17:46:26.317" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Process" library="Process">
+<var>${output}</var>
+<arg>${SHOW_INSTANCE}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20230626 17:46:26.318" level="TRACE">Arguments: [ 'digicloud instance show smprao' | shell='True' ]</msg>
+<msg timestamp="20230626 17:46:26.318" level="INFO">Starting process:
+digicloud instance show smprao</msg>
+<msg timestamp="20230626 17:46:26.318" level="DEBUG">Process configuration:
+cwd:     /home/newsha/new.robot
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+stdin:   PIPE
+alias:   None
+env:     None</msg>
+<msg timestamp="20230626 17:46:26.326" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20230626 17:46:29.387" level="INFO">Process completed.</msg>
+<msg timestamp="20230626 17:46:29.388" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7fb81c0c4640&gt;</msg>
+<msg timestamp="20230626 17:46:29.388" level="INFO">${output} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20230626 17:46:26.318" endtime="20230626 17:46:29.388"/>
+</kw>
+<kw name="Split Command Line" library="Process">
+<var>${list}</var>
+<arg>${output.stdout}</arg>
+<doc>Splits command line string into a list of arguments.</doc>
+<msg timestamp="20230626 17:46:29.390" level="TRACE">Arguments: [ "┌──────────────────┬──────────────────────────────────┐\n│ id               │ 0c599fc49e0843baab96d1469f933ec4 │\n│ name             │ smprao                           │\n│ key_name         │ None                             │\n│ firewalls        │ ['default']                      │\n│ addresses        │ []                               │\n│ access_ip        │                                  │\n│ cores            │ 4                                │\n│ memory           │ 4.0                              │\n│ root_volume_size │ 20                               │\n│ root_volume_type │ SSD                              │\n│ instance_type    │ g1.medium                        │\n│ status           │ BUILD                            │\n│ type             │ simple                           │\n│ os_name          │ Ubuntu_20.04_LTS                 │\n│ os_username      │ ubuntu                           │\n│ namespace_id     │ 3184b7d0439645488d94220d9a245109 │\n│ description      │ None                             │\n│ updated_at       │ 2023/06/26 17:46                 │\n│ created_at       │ 2023/06/26 17:46                 │\n└──────────────────┴──────────────────────────────────┘" ]</msg>
+<msg timestamp="20230626 17:46:29.392" level="TRACE">Return: ['┌──────────────────┬──────────────────────────────────┐',
+ '│',
+ 'id',
+ '│',
+ '0c599fc49e0843baab96d1469f933ec4',
+ '│',
+ '│',
+ 'name',
+ '│',
+ 'smprao',
+ '│',
+ '│',
+ 'key_name',
+ '│',
+ 'None',
+ '│',
+ '│',
+ 'firewalls',
+ '│',
+ '[default]',
+ '│',
+ '│',
+ 'addresses',
+ '│',
+ '[]',
+ '│',
+ '│',
+ 'access_ip',
+ '│',
+ '│',
+ '│',
+ 'cores',
+ '│',
+ '4',
+ '│',
+ '│',
+ 'memory',
+ '│',
+ '4.0',
+ '│',
+ '│',
+ 'root_volume_size',
+ '│',
+ '20',
+ '│',
+ '│',
+ 'root_volume_type',
+ '│',
+ 'SSD',
+ '│',
+ '│',
+ 'instance_type',
+ '│',
+ 'g1.medium',
+ '│',
+ '│',
+ 'status',
+ '│',
+ 'BUILD',
+ '│',
+ '│',
+ 'type',
+ '│',
+ 'simple',
+ '│',
+ '│',
+ 'os_name',
+ '│',
+ 'Ubuntu_20.04_LTS',
+ '│',
+ '│',
+ 'os_username',
+ '│',
+ 'ubuntu',
+ '│',
+ '│',
+ 'namespace_id',
+ '│',
+ '3184b7d0439645488d94220d9a245109',
+ '│',
+ '│',
+ 'description',
+ '│',
+ 'None',
+ '│',
+ '│',
+ 'updated_at',
+ '│',
+ '2023/06/26',
+ '17:46',
+ '│',
+ '│',
+ 'created_at',
+ '│',
+ '2023/06/26',
+ '17:46',
+ '│',
+ '└──────────────────┴──────────────────────────────────┘']</msg>
+<msg timestamp="20230626 17:46:29.393" level="INFO">${list} = ['┌──────────────────┬──────────────────────────────────┐', '│', 'id', '│', '0c599fc49e0843baab96d1469f933ec4', '│', '│', 'name', '│', 'smprao', '│', '│', 'key_name', '│', 'None', '│', '│', 'firewalls...</msg>
+<status status="PASS" starttime="20230626 17:46:29.389" endtime="20230626 17:46:29.393"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${output.stdout}</arg>
+<arg>BUILD</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20230626 17:46:29.394" level="TRACE">Arguments: [ "┌──────────────────┬──────────────────────────────────┐\n│ id               │ 0c599fc49e0843baab96d1469f933ec4 │\n│ name             │ smprao                           │\n│ key_name         │ None                             │\n│ firewalls        │ ['default']                      │\n│ addresses        │ []                               │\n│ access_ip        │                                  │\n│ cores            │ 4                                │\n│ memory           │ 4.0                              │\n│ root_volume_size │ 20                               │\n│ root_volume_type │ SSD                              │\n│ instance_type    │ g1.medium                        │\n│ status           │ BUILD                            │\n│ type             │ simple                           │\n│ os_name          │ Ubuntu_20.04_LTS                 │\n│ os_username      │ ubuntu                           │\n│ namespace_id     │ 3184b7d0439645488d94220d9a245109 │\n│ description      │ None                             │\n│ updated_at       │ 2023/06/26 17:46                 │\n│ created_at       │ 2023/06/26 17:46                 │\n└──────────────────┴──────────────────────────────────┘" | 'BUILD' ]</msg>
+<msg timestamp="20230626 17:46:29.395" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:29.393" endtime="20230626 17:46:29.395"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${output.stdout}</arg>
+<arg>${G1_M_TYPE}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20230626 17:46:29.396" level="TRACE">Arguments: [ "┌──────────────────┬──────────────────────────────────┐\n│ id               │ 0c599fc49e0843baab96d1469f933ec4 │\n│ name             │ smprao                           │\n│ key_name         │ None                             │\n│ firewalls        │ ['default']                      │\n│ addresses        │ []                               │\n│ access_ip        │                                  │\n│ cores            │ 4                                │\n│ memory           │ 4.0                              │\n│ root_volume_size │ 20                               │\n│ root_volume_type │ SSD                              │\n│ instance_type    │ g1.medium                        │\n│ status           │ BUILD                            │\n│ type             │ simple                           │\n│ os_name          │ Ubuntu_20.04_LTS                 │\n│ os_username      │ ubuntu                           │\n│ namespace_id     │ 3184b7d0439645488d94220d9a245109 │\n│ description      │ None                             │\n│ updated_at       │ 2023/06/26 17:46                 │\n│ created_at       │ 2023/06/26 17:46                 │\n└──────────────────┴──────────────────────────────────┘" | 'g1.medium' ]</msg>
+<msg timestamp="20230626 17:46:29.396" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:29.395" endtime="20230626 17:46:29.396"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${output.stdout}</arg>
+<arg>${UBUNTU_IMG}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20230626 17:46:29.397" level="TRACE">Arguments: [ "┌──────────────────┬──────────────────────────────────┐\n│ id               │ 0c599fc49e0843baab96d1469f933ec4 │\n│ name             │ smprao                           │\n│ key_name         │ None                             │\n│ firewalls        │ ['default']                      │\n│ addresses        │ []                               │\n│ access_ip        │                                  │\n│ cores            │ 4                                │\n│ memory           │ 4.0                              │\n│ root_volume_size │ 20                               │\n│ root_volume_type │ SSD                              │\n│ instance_type    │ g1.medium                        │\n│ status           │ BUILD                            │\n│ type             │ simple                           │\n│ os_name          │ Ubuntu_20.04_LTS                 │\n│ os_username      │ ubuntu                           │\n│ namespace_id     │ 3184b7d0439645488d94220d9a245109 │\n│ description      │ None                             │\n│ updated_at       │ 2023/06/26 17:46                 │\n│ created_at       │ 2023/06/26 17:46                 │\n└──────────────────┴──────────────────────────────────┘" | 'Ubuntu_20.04_LTS' ]</msg>
+<msg timestamp="20230626 17:46:29.398" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:29.396" endtime="20230626 17:46:29.398"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>20seconds</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20230626 17:46:29.398" level="TRACE">Arguments: [ '20seconds' ]</msg>
+<msg timestamp="20230626 17:46:49.398" level="INFO">Slept 20 seconds</msg>
+<msg timestamp="20230626 17:46:49.399" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:29.398" endtime="20230626 17:46:49.399"/>
+</kw>
+<msg timestamp="20230626 17:46:49.399" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:26.317" endtime="20230626 17:46:49.399"/>
 </kw>
 <kw name="Delete Instance">
-<status status="NOT RUN" starttime="20230619 23:57:33.486" endtime="20230619 23:57:33.486"/>
+<msg timestamp="20230626 17:46:49.400" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Process" library="Process">
+<arg>${DELETE_INSTANCE}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20230626 17:46:49.401" level="TRACE">Arguments: [ 'digicloud instance delete smprao --i-am-sure --delete-root-volume' | shell='True' ]</msg>
+<msg timestamp="20230626 17:46:49.401" level="INFO">Starting process:
+digicloud instance delete smprao --i-am-sure --delete-root-volume</msg>
+<msg timestamp="20230626 17:46:49.401" level="DEBUG">Process configuration:
+cwd:     /home/newsha/new.robot
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+stdin:   PIPE
+alias:   None
+env:     None</msg>
+<msg timestamp="20230626 17:46:49.407" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20230626 17:47:00.500" level="INFO">Process completed.</msg>
+<msg timestamp="20230626 17:47:00.501" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7fb81c0c5000&gt;</msg>
+<status status="PASS" starttime="20230626 17:46:49.400" endtime="20230626 17:47:00.501"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${output}</var>
+<arg>${SHOW_INSTANCE}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20230626 17:47:00.502" level="TRACE">Arguments: [ 'digicloud instance show smprao' | shell='True' ]</msg>
+<msg timestamp="20230626 17:47:00.502" level="INFO">Starting process:
+digicloud instance show smprao</msg>
+<msg timestamp="20230626 17:47:00.502" level="DEBUG">Process configuration:
+cwd:     /home/newsha/new.robot
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+stdin:   PIPE
+alias:   None
+env:     None</msg>
+<msg timestamp="20230626 17:47:00.509" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20230626 17:47:02.451" level="INFO">Process completed.</msg>
+<msg timestamp="20230626 17:47:02.451" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7fb81c0c5120&gt;</msg>
+<msg timestamp="20230626 17:47:02.451" level="INFO">${output} = &lt;result object with rc 1&gt;</msg>
+<status status="PASS" starttime="20230626 17:47:00.501" endtime="20230626 17:47:02.451"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>20seconds</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20230626 17:47:02.452" level="TRACE">Arguments: [ '20seconds' ]</msg>
+<msg timestamp="20230626 17:47:22.453" level="INFO">Slept 20 seconds</msg>
+<msg timestamp="20230626 17:47:22.453" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:47:02.452" endtime="20230626 17:47:22.453"/>
+</kw>
+<msg timestamp="20230626 17:47:22.454" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:46:49.400" endtime="20230626 17:47:22.454"/>
 </kw>
 <kw name="Show Instance List">
-<status status="NOT RUN" starttime="20230619 23:57:33.486" endtime="20230619 23:57:33.487"/>
+<msg timestamp="20230626 17:47:22.455" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Process" library="Process">
+<var>${output}</var>
+<arg>${INSTANCE_LIST}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20230626 17:47:22.455" level="TRACE">Arguments: [ 'digicloud instance list ' | shell='True' ]</msg>
+<msg timestamp="20230626 17:47:22.456" level="INFO">Starting process:
+digicloud instance list </msg>
+<msg timestamp="20230626 17:47:22.456" level="DEBUG">Process configuration:
+cwd:     /home/newsha/new.robot
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+stdin:   PIPE
+alias:   None
+env:     None</msg>
+<msg timestamp="20230626 17:47:22.462" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20230626 17:47:26.551" level="INFO">Process completed.</msg>
+<msg timestamp="20230626 17:47:26.551" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7fb81c0c5750&gt;</msg>
+<msg timestamp="20230626 17:47:26.552" level="INFO">${output} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20230626 17:47:22.455" endtime="20230626 17:47:26.552"/>
 </kw>
-<status status="FAIL" starttime="20230619 23:57:33.464" endtime="20230619 23:57:33.487">No keyword with name 'Open Browser' found.</status>
+<kw name="Should Not Contain" library="BuiltIn">
+<arg>${output.stdout}</arg>
+<arg>${INS_NAME}</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<msg timestamp="20230626 17:47:26.554" level="TRACE">Arguments: [ "┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━┓\n┃           ┃ descripti ┃          ┃           ┃ instance_ ┃        ┃ updated_ ┃\n┃ name      ┃ on        ┃ type     ┃ addresses ┃ type      ┃ status ┃ at       ┃\n┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━┩\n│ newtest-2 │ None      │ advanced │ ['192.168 │ g1.medium │ ACTIVE │ 2023/05/ │\n│           │           │          │ .0.190',  │           │        │ 20 12:48 │\n│           │           │          │ '172.16.1 │           │        │          │\n│           │           │          │ 39.85']   │           │        │          │\n└───────────┴───────────┴──────────┴───────────┴───────────┴────────┴──────────┘" | 'smprao' ]</msg>
+<msg timestamp="20230626 17:47:26.554" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:47:26.552" endtime="20230626 17:47:26.554"/>
+</kw>
+<msg timestamp="20230626 17:47:26.554" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20230626 17:47:22.454" endtime="20230626 17:47:26.554"/>
+</kw>
+<status status="PASS" starttime="20230626 17:46:07.728" endtime="20230626 17:47:26.555"/>
 </test>
-<status status="FAIL" starttime="20230619 23:57:33.302" endtime="20230619 23:57:33.488"/>
+<status status="PASS" starttime="20230626 17:46:07.448" endtime="20230626 17:47:26.556"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Console">Console</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="CLI">CLI</stat>
 </suite>
 </statistics>
 <errors>
-<msg timestamp="20230619 23:57:33.315" level="ERROR">Error in file '/Users/newsha/qa/dk-cld-rbt/console.robot' on line 3: Importing library 'SeleniumLibrary' failed: ModuleNotFoundError: No module named 'SeleniumLibrary'
-Traceback (most recent call last):
-  None
-PYTHONPATH:
-  /Users/newsha/.vscode/extensions/robocorp.robotframework-lsp-1.11.0/src/robotframework_debug_adapter
-  /Users/newsha/qa/dk-cld-rbt
-  /Users/newsha/.vscode/extensions/robocorp.robotframework-lsp-1.11.0/src
-  /Users/newsha/.vscode/extensions/robocorp.robotframework-lsp-1.11.0/src/robotframework_ls/vendored
-  /Users/Shared/robocorp/ht/926ffd3_b1f3c24_c597ca71/lib/python39.zip
-  /Users/Shared/robocorp/ht/926ffd3_b1f3c24_c597ca71/lib/python3.9
-  /Users/Shared/robocorp/ht/926ffd3_b1f3c24_c597ca71/lib/python3.9/lib-dynload
-  /Users/Shared/robocorp/ht/926ffd3_b1f3c24_c597ca71/lib/python3.9/site-packages</msg>
 </errors>
 </robot>

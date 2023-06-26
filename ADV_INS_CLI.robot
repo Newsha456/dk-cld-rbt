@@ -23,8 +23,6 @@ Digi Cli Test Case
     Delete Instance
     Show Instance List
 
-
-
 *** Keywords ***
 # This step involves executing the CLI command to log in to the DigiCloud platform.
 # The specific command to be executed will depend on the CLI interface provided by DigiCloud.
@@ -55,7 +53,7 @@ Delete Instance
     Run Process                   ${DELETE_INSTANCE}                                                   shell=True
     ${output}=                    Run Process                 ${SHOW_INSTANCE}                         shell=True
     Sleep                         20seconds
-# ?The final step of this test case is to execute the CLI command that retrieves a list of instances available on the DigiCloud platform. 
+# The final step of this test case is to execute the CLI command that retrieves a list of instances available on the DigiCloud platform. 
 # sThe output of this command is then validated to ensure that the deleted instance no longer appears in the list.
 Show Instance List
     ${output}=                    Run Process                 ${INSTANCE_LIST}                          shell=True
