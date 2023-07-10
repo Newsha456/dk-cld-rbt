@@ -8,7 +8,7 @@ Library            Process
 Library            String
 Library            Screenshot
 Library            OperatingSystem
-Library            SeleniumLibrary
+# Library            SeleniumLibrary
 Library            json
 Test Setup         Set Log Level    TRACE   
 Variables          ./Variables/cli_var.py
@@ -18,43 +18,60 @@ Variables          ./Variables/cli_var.py
 
 Digi Cli Test Case
     Digicloud login
-    Instance create
-    Check Instance Details
-    Delete Instance
-    Show Instance List
+    Create Network
+    Check Network list
+    Update Network
+    Create Subnet
+    Subnet details
+    Create Router
+    Router details
+    Enable Router Gateway
+    Create Router Interface
+    Create Public IP
+    Public IP details
+    Associating Public IP to Router interface
+
 
 *** Keywords ***
-# This step involves executing the CLI command to log in to the DigiCloud platform.
-# The specific command to be executed will depend on the CLI interface provided by DigiCloud.
 Digicloud login
     [Documentation]               Activates the .env digicli
     Set Environment Variable      API_BASE_URL                https://api.digicloud.dev
     ${output}=                    Run Process                 ${LOGIN}                                shell=True
     Should Contain                ${output.stdout}            ir-vanak-plaza
 
-# In this step, the CLI command to create a new instance on the DigiCloud platform is executed. 
-# This command may include parameters such as instance type, region, and other specifications.
-Instance create
-    ${output}=                    Run Process                 ${CREATE_INSTANCE}                      shell=True
-    Should Contain                ${output.stdout}            ${INS_NAME}
-# After creating the instance, this step focuses on verifying the instance details. 
-# The CLI command to retrieve the details of the created instance is executed, and the obtained information is compared against the expected values.
-Check Instance Details
-    ${output}=                    Run Process                 ${SHOW_INSTANCE}                       shell=True
+Create Network
+    ${output}=                    Run Process                 ${CREATE_NETWORK}                      shell=True
+    Should Contain                ${output.stdout}            ${NET_NAME}
+    Should Contain                ${output.stdout}            ACTIVE
+
+Check Network list
+    ${output}=                    Run Process                 ${NET_LIST}                       shell=True
     ${list}                       Split Command Line          ${output.stdout}            
-    Should Contain                ${output.stdout}            BUILD
-    Should Contain                ${output.stdout}            ${G1_TYPE}                
-    Should Contain                ${output.stdout}            ${UBUNTU_IMG}
-    Sleep                         20seconds
-# This step involves executing the CLI command to delete the previously created instance. 
-# The command may require specifying the instance ID or another identifier to identify the instance to be deleted.
-Delete Instance
+    Should Contain                ${output.stdout}            ${NET_NAME}                    
+
+Update Network    
     
-    Run Process                   ${DELETE_INSTANCE}                                                   shell=True
-    ${output}=                    Run Process                 ${SHOW_INSTANCE}                         shell=True
+    ${output}=                    Run Process                 ${NET_UPDATE}                                                   shell=True
+    Should contain                ${output.stdout}            ${NETWORK_NAME_UPDATE}
+    Should contain                ${output.stdout}            ${ADMIN_S_UP}
     Sleep                         20seconds
-# The final step of this test case is to execute the CLI command that retrieves a list of instances available on the DigiCloud platform. 
-# sThe output of this command is then validated to ensure that the deleted instance no longer appears in the list.
-Show Instance List
-    ${output}=                    Run Process                 ${INSTANCE_LIST}                          shell=True
-    Should Not Contain            ${output.stdout}            ${INS_NAME}                              
+
+Create Router
+    ${output}=                    Run Process                 ${CREATE_ROUTER}                          shell=True
+    Should Contain                ${output.stdout}            ${ROUTER_NAME}          
+    Should Contain                ${output.stdout}            ${ADMIN_S_UP}
+
+
+Create Subnet
+Subnet details
+
+
+
+Enable Router Gateway
+
+
+Create Router Interface
+
+Create Public IP
+Public IP details
+Associating Public IP to Router interface
